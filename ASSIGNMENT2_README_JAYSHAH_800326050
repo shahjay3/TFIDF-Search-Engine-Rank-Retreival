@@ -1,0 +1,94 @@
+READ ME
+
+To run the DocWordCount:
+
+1. compile and build the file 
+
+Compile : 
+
+javac -cp /usr/lib/hadoop/*:/usr/lib/hadoop-mapreduce/* /home/cloudera/DocWordCount.java -d build -Xlint
+
+the /home/cloudera/DocWordCount.java must be replaced with your own path. 
+
+Build:  jar -cvf DocWordCount.jar -C build/ . 
+
+Run Hadoop: for this, user must specify the input and output path file. 
+
+hadoop jar DocWordCount.jar org.myorg.DocWordCount  /user/cloudera/wordcount/input /user/cloudera/wordcount/output
+please replace /user/cloudera/wordcount/input and /user/cloudera/wordcount/output with your input and output paths
+
+------------------------------------------
+
+To run Term Frequency:
+
+1. Remove the previous output file
+
+Compile : 
+
+javac -cp /usr/lib/hadoop/*:/usr/lib/hadoop-mapreduce/* /home/cloudera/TermFrequency.java -d build -Xlint
+
+the /home/cloudera/TermFrequency.java must be replaced with your own path. 
+
+Build:  jar -cvf TermFrequency.jar -C build/ . 
+
+Run Hadoop: for this, user must specify the input and output path file. 
+
+hadoop jar TermFrequency.jar org.myorg.TermFrequency  /user/cloudera/wordcount/input /user/cloudera/wordcount/output
+
+* The input and output file paths must be your own. 
+
+------------------------------
+
+To run TFIDF:
+
+1. Remove the previous output file
+
+Compile:
+javac -cp /usr/lib/hadoop/*:/usr/lib/hadoop-mapreduce/* /home/cloudera/TFIDF.java -d build -Xlint
+
+please put your own file path for the TFIDF.java
+
+Build the jar file: jar -cvf TFIDF.jar -C build/ .
+
+**** *** TO SUBMIT THE HADOOP JOB *******
+in order to submit the hadoop job you have to specify the following
+
+input file, intermediate file path, output file, number of files
+
+ex:
+hadoop jar TFIDF.jar org.myorg.TFIDF /user/cloudera/wordcount/input /user/cloudera/wordcount/output /user/cloudera/wordcount/final 8
+
+** After the job is done, DO NOT delete your output final file, this will be used for the Search.java
+
+------------------------------
+To run the Search.java
+
+1. remove the output file
+2. the final file from the TFIDF will be the input file to the Search.java
+
+Compile the Search.java
+
+javac -cp /usr/lib/hadoop/*:/usr/lib/hadoop-mapreduce/* /home/cloudera/Search.java -d build -Xlint
+
+Build the jar:
+
+jar -cvf Search.jar -C build/ .
+
+run hadoop: 
+** you must specify the input file (which is the final output file of TFIDF)
+** you  must specify the output file
+** you must specify the query in quotes in the arguments line:
+
+example: 
+hadoop jar Search.jar org.myorg.Search  /user/cloudera/wordcount/final /user/cloudera/wordcount/output "data analysis"
+
+> here the query is "data analysis" (as specified in the homework). 
+
+
+
+
+
+
+
+
+
